@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <form action="" method=post class="form-horizontal">
+
+      <h2>{{ ex.title }}</h2>
+
+      <img src="{{ url_for('static', filename='Ex' + id + '.jpg') }}" alt="Picture" style="width:50%" >
+
+      <p>{{ ex.text }}</p>
+
+      <h3>Format des données</h3>
+        <div>
+          <span class="badge badge-success">Entrée</span>
+        </div>
+        <p>{{ ex.entree }}</p>
+        <div>
+          <span class="badge badge-warning">Sortie</span>
+        </div>
+        <p>{{ ex.sortie }}</p>
+      <br>
+
+      <a href="{{ url_for('static', filename='Ex' + id + '.zip') }}">
+        <div>
+          <span class="badge badge-primary">Téléchargez des fichiers d'exemple d'ici!</span>
+        </div>
+      </a>
+      <br>
+
+      <div class="controls">
+          <input type="solution" id="solution" name="solution" class="input-xlarge"
+            placeholder="Enter a response" value="{{ request.form.solution }}"
+            required>
+                    <button type="submit" class="btn btn-success">Try it!</button>
+
+                {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                    <ul class=flashes>
+                        {% for message in messages %}
+                        <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                  {% endif %}
+                {% endwith %}
+      </div>
+    </form>
+
+
+
+{% endblock %}

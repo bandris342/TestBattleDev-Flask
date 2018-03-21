@@ -1,0 +1,75 @@
+<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+
+<div class="container">
+  <div class="row">
+    <div class="span12">
+      <div class="head">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="span6">
+                    <h1 class="muted">Test Battle Dev</h1>
+                </div>
+
+
+                <div class="span4 offset2">
+                    {% if current_user.is_authenticated %}
+                        <h4>Hi {{ current_user.username }}!</h4>
+                    {% else %}
+                        <h4>You are not logged in.</h4>
+                    {% endif %}
+                </div>
+
+
+                   {% if current_user.is_authenticated %}
+                    <form action="{{ url_for('logout') }}" method="get">
+                       <button class="btn pull-right" type="submit"> Logout </button>
+                    </form>
+                   {% else %}
+                    <form action="{{ url_for('register') }}" method="get">
+                        <button class="btn pull-right" type="submit"> Signup </button>
+                    </form>
+                    <form action="{{ url_for('login') }}" method="get">
+                        <button class="btn pull-right" type="submit"> Login </button>
+                    </form>
+                   {% endif %}
+
+
+
+            </div>
+        </div>
+
+        <div class="navbar">
+            <div class="navbar-inner">
+                <div class="container">
+                    <ul class="nav">
+                        <li>
+                            <a href="{{ url_for('index') }}">Home</a>
+                        </li>
+
+                        {% if current_user.is_authenticated %}
+                        <li>
+                            <a href="{{ url_for('start') }}">Start!</a>
+                        </li>
+                        {% endif %}
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+      <div class="span8">
+          <div class="row-fluid">
+       {% block content %}
+
+
+       {% endblock %}
+
+          </div>
+      </div>
+  </div>
+</div>
