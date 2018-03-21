@@ -6,19 +6,22 @@
 
       <h2>{{ ex.title }}</h2>
 
-      <img src="{{ url_for('static', filename='Ex' + id + '.jpg') }}" alt="Picture" style="width:50%" >
+      <img src="{{ url_for('static', filename='Ex' + id + '.jpg') }}" alt="Picture" style="width:30%" >
+      <hr>
 
-      <p>{{ ex.text }}</p>
+    <div class="span8 offset2 text-left">
+      <p>{{ ex.text|safe }}</p>
 
+    <br>
       <h3>Format des données</h3>
         <div>
           <span class="badge badge-success">Entrée</span>
         </div>
-        <p>{{ ex.entree }}</p>
+        <p>{{ ex.entree|safe }}</p>
         <div>
           <span class="badge badge-warning">Sortie</span>
         </div>
-        <p>{{ ex.sortie }}</p>
+        <p>{{ ex.sortie|safe }}</p>
       <br>
 
       <a href="{{ url_for('static', filename='Ex' + id + '.zip') }}">
@@ -30,7 +33,7 @@
 
       <div class="controls">
           <input type="solution" id="solution" name="solution" class="input-xlarge"
-            placeholder="Enter a response" value="{{ request.form.solution }}"
+            placeholder="Enter your response" value="{{ request.form.solution }}"
             required>
                     <button type="submit" class="btn btn-success">Try it!</button>
 
@@ -44,7 +47,9 @@
                   {% endif %}
                 {% endwith %}
       </div>
+     </div>
     </form>
+    <br>
 
 
 

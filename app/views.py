@@ -1,5 +1,6 @@
-from flask import render_template, request, redirect, url_for, flash, jsonify
+from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user , logout_user , current_user , login_required
+from werkzeug.security import generate_password_hash, check_password_hash
 from app.models import db, User, Exercices
 from app import app
 
@@ -11,7 +12,7 @@ def index():
 def register():
 	if request.method == 'GET':
 		return render_template('register.html')
-	user = User(username=request.form['username'], password=request.form['password'])
+	user = User(username=request.form['username'], password=generate_password_hash(request.form['password']))
 	if db.session.query(User.id).filter_by(username=user.username).scalar() is not None:
 		flash('Username already exists', 'error')
 		return redirect(url_for('register'))
@@ -27,12 +28,13 @@ def login():
         return render_template('login.html')
     username = request.form['username']
     password = request.form['password']
-    registered_user = User.query.filter_by(username=username,password=password).first()
-    if registered_user is None:
-        flash('Username or Password is invalid' , 'error')
-        return redirect(url_for('login'))
-    login_user(registered_user)
-    return redirect(request.args.get('next') or url_for('index'))
+    registered_user =  db.session.query(User).filter_by(username=username).first()
+    if registered_user and check_password_hash(registered_user.password, password):
+        login_user(registered_user)
+        return redirect(request.args.get('next') or url_for('index'))
+    flash('Username or Password is invalid' , 'error')
+    return redirect(url_for('login'))
+
 
 @app.route('/logout')
 @login_required
