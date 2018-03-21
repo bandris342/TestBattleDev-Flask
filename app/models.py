@@ -11,12 +11,13 @@ class Exercices(db.Model) :
     solution = db.Column('solution', db.String(500))
 
 class User(db.Model):
-    __tablename__ = "users"
+    __tablename__ = 'users'
     id = db.Column('user_id', db.Integer, primary_key=True)
     username = db.Column('username', db.String(20), unique=True)
     password = db.Column('password', db.String(10))
     registered_on = db.Column('registered_on', db.DateTime, default=db.func.current_timestamp())
     level = db.Column('level', db.Integer, default=1)
+    codes = db.relationship('Codes')
 
     def is_authenticated(self):
         return True
@@ -40,3 +41,9 @@ class Startstop(db.Model):
     id = db.Column('id', db.Integer, primary_key=True)
     status = db.Column('status', db.Integer)
 
+class Codes(db.Model):
+    __tablename__ = 'codes'
+    id = db.Column('code_id', db.Integer, primary_key=True)
+    user_id = db.Column('user_id', db.Integer, db.ForeignKey('users.user_id'))
+    sent_on = db.Column('sent_on', db.DateTime, default=db.func.current_timestamp())
+    code = db.Column('solution', db.Text)

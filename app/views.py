@@ -47,10 +47,12 @@ def logout():
 @app.route('/start', methods=['GET', 'POST'])
 @login_required
 def start():
+    if current_user.level==7:
+        return render_template('message.html', message='Félicitations! You are the best :)')
     stst=Startstop.query.all()[0]
     if stst.status==0:
         return render_template('message.html', message='Un peu de patience... On commence tout de suite!')
-    if stst.status ==3:
+    if stst.status==2:
         return render_template('message.html', message='Désolé, le concours est terminé ;(')
     if current_user.get_level() > 6:
         return redirect(url_for('index'))
@@ -58,7 +60,7 @@ def start():
     if request.method == 'GET':
         return render_template('exo.html', ex=ex, id=str(ex.id))
     solution = request.form['solution']
-    if solution == ex.solution:
+    if (solution == ex.solution) and (stst.status==1):
         current_user.level+=1
         db.session.commit()
         return redirect(url_for('start'))

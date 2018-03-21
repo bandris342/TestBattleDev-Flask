@@ -10,34 +10,34 @@
       <hr>
 
     <div class="span8 offset2 text-left">
+     <h5>
       <p>{{ ex.text|safe }}</p>
-
+     </h5>
     <br>
       <h3>Format des données</h3>
         <div>
           <span class="badge badge-success">Entrée</span>
         </div>
-        <p>{{ ex.entree|safe }}</p>
+        <h5>
+         <p>{{ ex.entree|safe }}</p>
+        </h5>
         <div>
           <span class="badge badge-warning">Sortie</span>
         </div>
-        <p>{{ ex.sortie|safe }}</p>
-      <br>
+        <h5>
+          <p>{{ ex.sortie|safe }}</p>
+        </h5>
+        <br>
 
-      <a href="{{ url_for('static', filename='Ex' + id + '.zip') }}">
-        <div>
+        <a href="{{ url_for('static', filename='Ex' + id + '.zip') }}">
+         <div>
           <span class="badge badge-primary">Téléchargez des fichiers d'exemple d'ici!</span>
-        </div>
-      </a>
+         </div>
+        </a>
       <br>
 
-      <div class="controls">
-          <input type="solution" id="solution" name="solution" class="input-xlarge"
-            placeholder="Enter your response" value="{{ request.form.solution }}"
-            required>
-                    <button type="submit" class="btn btn-success">Try it!</button>
-
-                {% with messages = get_flashed_messages() %}
+          <h5>
+          {% with messages = get_flashed_messages() %}
                   {% if messages %}
                     <ul class=flashes>
                         {% for message in messages %}
@@ -45,9 +45,26 @@
                         {% endfor %}
                     </ul>
                   {% endif %}
-                {% endwith %}
-      </div>
-     </div>
+          {% endwith %}
+          </h5>
+          <p>
+           <h5>Ta réponse:</h5>
+           <input type="text" id="solution" name="solution" class="input-xlarge"
+            placeholder="Enter your response" value="{{ request.form.solution }}"
+            required>
+          </p>
+
+          <button type="submit" class="btn btn-success">Try it!</button>
+
+          <p>
+          <h5>Ton code:</h5>
+
+          <textarea type="text" id="code" name="code" class="input-xlarge" rows="25" style="min-width: 100%"
+            placeholder="Copy your code here" value="{{ request.form.code }}"
+            required></textarea>
+
+          </p>
+        </div>
     </form>
 
 

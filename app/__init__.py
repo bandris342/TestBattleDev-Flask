@@ -1,5 +1,5 @@
 from flask import Flask
-from app.models import db, User, Exercices, Startstop
+from app.models import db, User, Exercices, Startstop, Codes
 from flask_login import LoginManager, current_user
 from flask_admin import Admin, AdminIndexView
 from flask_admin.contrib.sqla import ModelView
@@ -22,6 +22,7 @@ class MyAdminIndexView(AdminIndexView):
 admin = Admin(app, name='Admin page', template_mode='bootstrap3', index_view=MyAdminIndexView())
 admin.add_view(ModelView(Startstop, db.session))
 admin.add_view(ModelView(User, db.session))
+admin.add_view(ModelView(Codes, db.session))
 admin.add_view(ModelView(Exercices, db.session))
 
 @login_manager.user_loader
