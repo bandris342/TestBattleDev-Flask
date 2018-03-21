@@ -31,6 +31,8 @@ def login():
     registered_user =  db.session.query(User).filter_by(username=username).first()
     if registered_user and check_password_hash(registered_user.password, password):
         login_user(registered_user)
+        if current_user.username == 'admin':
+            return redirect(url_for('admin.index'))
         return redirect(request.args.get('next') or url_for('index'))
     flash('Username or Password is invalid' , 'error')
     return redirect(url_for('login'))
