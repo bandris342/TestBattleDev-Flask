@@ -36,4 +36,7 @@ class User(db.Model):
     def __repr__(self):
         return '<User %r>' % (self.username)
 
+class Startstop(db.Model):
+    id = db.Column('id', db.Integer, primary_key=True)
+    status = db.Column('status', db.Integer)
 

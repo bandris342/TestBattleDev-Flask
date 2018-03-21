@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user , logout_user , current_user , login_required
 from werkzeug.security import generate_password_hash, check_password_hash
-from app.models import db, User, Exercices
+from app.models import db, User, Exercices, Startstop
 from app import app
 
 @app.route('/', methods=['GET'])
@@ -47,6 +47,11 @@ def logout():
 @app.route('/start', methods=['GET', 'POST'])
 @login_required
 def start():
+    stst=Startstop.query.all()[0]
+    if stst.status==0:
+        return render_template('message.html', message='Un peu de patience... On commence tout de suite!')
+    if stst.status ==3:
+        return render_template('message.html', message='Désolé, le concours est terminé ;(')
     if current_user.get_level() > 6:
         return redirect(url_for('index'))
     ex = Exercices.query.filter_by(id=current_user.get_level()).first()
