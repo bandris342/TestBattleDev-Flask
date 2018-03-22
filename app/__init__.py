@@ -19,15 +19,13 @@ class MyAdminIndexView(AdminIndexView):
         else:
             return False
 
-class CodeView(ModelView):
-	def __init__(self, session, **kwargs):
-   		super(CodeView, self).__init__(Codes, session,**kwargs)
 
 admin = Admin(app, name='Admin page', template_mode='bootstrap3', index_view=MyAdminIndexView())
-admin.add_view(ModelView(Startstop, db.session))
 admin.add_view(ModelView(User, db.session))
+admin.add_view(ModelView(Codes, db.session))
+admin.add_view(ModelView(Startstop, db.session))
 admin.add_view(ModelView(Exercices, db.session))
-admin.add_view(CodeView(db.session))
+
 
 @login_manager.user_loader
 def load_user(id):
