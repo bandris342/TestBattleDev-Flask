@@ -69,3 +69,4 @@ def start():
         return redirect(url_for('start'))
     flash('Bad solution, try again!')
     return redirect(url_for('start'))
+

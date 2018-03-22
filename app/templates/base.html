@@ -18,6 +18,7 @@
                 <div class="span4 offset2">
                     {% if current_user.is_authenticated %}
                         <h4>Hi {{ current_user.username }}!</h4>
+                        Your rank is {{ current_user.get_rank() }}
                     {% else %}
                         <h4>You are not logged in.</h4>
                     {% endif %}

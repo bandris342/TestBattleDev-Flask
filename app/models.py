@@ -15,7 +15,7 @@ class User(db.Model):
     __tablename__ = 'users'
     id = db.Column('user_id', db.Integer, primary_key=True)
     username = db.Column('username', db.String(20), unique=True)
-    password = db.Column('password', db.String(10))
+    password = db.Column('password', db.String(100))
     registered_on = db.Column('registered_on', db.DateTime, default=datetime.datetime.now)
     level = db.Column('level', db.Integer, default=1)
     codes = db.relationship('Codes')
@@ -34,6 +34,19 @@ class User(db.Model):
 
     def get_level(self):
         return self.level
+
+    def get_rank(self):
+        if self.level==1:
+            return -1
+        cnt = 1
+        for u in User.query.all():
+            if u.level > self.level:
+                cnt += 1
+            if u.level == self.level and len(u.codes) > 0:
+                if self.codes[len(self.codes) - 1].sent_on > u.codes[len(u.codes) - 1].sent_on:
+                    print(self.username, len(self.codes), u.username, len(u.codes))
+                    cnt += 1
+        return cnt
 
     def __repr__(self):
         return '<User %r>' % (self.username)
