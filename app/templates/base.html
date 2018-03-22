@@ -18,7 +18,9 @@
                 <div class="span4 offset2">
                     {% if current_user.is_authenticated %}
                         <h4>Hi {{ current_user.username }}!</h4>
-                        Your rank is {{ current_user.get_rank() }}
+                        {% if current_user.level>1 %}
+                            <h5>Your actual rank is: {{ current_user.get_rank() }}.</h5>
+                        {% endif %}
                     {% else %}
                         <h4>You are not logged in.</h4>
                     {% endif %}
@@ -54,6 +56,9 @@
                         {% if current_user.is_authenticated %}
                         <li>
                             <a href="{{ url_for('start') }}">Start!</a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('test') }}">Test exemple</a>
                         </li>
                         {% endif %}
 

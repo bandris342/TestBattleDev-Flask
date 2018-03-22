@@ -19,7 +19,6 @@ class MyAdminIndexView(AdminIndexView):
         else:
             return False
 
-
 admin = Admin(app, name='Admin page', template_mode='bootstrap3', index_view=MyAdminIndexView())
 admin.add_view(ModelView(User, db.session))
 admin.add_view(ModelView(Codes, db.session))

@@ -44,6 +44,19 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
+@app.route('/test', methods=['GET', 'POST'])
+@login_required
+def test():
+    ex = Exercices.query.filter_by(id=99).first()
+    if request.method == 'GET':
+        return render_template('exo.html', ex=ex, id=str(ex.id))
+    solution = request.form['solution']
+    if (solution == ex.solution):
+        return render_template('message.html', message='Bravo!')
+    flash('Bad solution, try again!')
+    return redirect(url_for('test'))
+
+
 @app.route('/start', methods=['GET', 'POST'])
 @login_required
 def start():
