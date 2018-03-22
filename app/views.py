@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user , logout_user , current_user , login_required
 from werkzeug.security import generate_password_hash, check_password_hash
-from app.models import db, User, Exercices, Startstop
+from app.models import db, User, Exercices, Startstop, Codes
 from app import app
 
 @app.route('/', methods=['GET'])
@@ -60,8 +60,11 @@ def start():
     if request.method == 'GET':
         return render_template('exo.html', ex=ex, id=str(ex.id))
     solution = request.form['solution']
+    codetext = request.form['code']
     if (solution == ex.solution) and (stst.status==1):
+        code = Codes(code=codetext, user_id=current_user.get_id())
         current_user.level+=1
+        db.session.add(code)
         db.session.commit()
         return redirect(url_for('start'))
     flash('Bad solution, try again!')

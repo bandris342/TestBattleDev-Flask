@@ -1,3 +1,4 @@
+import datetime
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -15,7 +16,7 @@ class User(db.Model):
     id = db.Column('user_id', db.Integer, primary_key=True)
     username = db.Column('username', db.String(20), unique=True)
     password = db.Column('password', db.String(10))
-    registered_on = db.Column('registered_on', db.DateTime, default=db.func.current_timestamp())
+    registered_on = db.Column('registered_on', db.DateTime, default=datetime.datetime.now)
     level = db.Column('level', db.Integer, default=1)
     codes = db.relationship('Codes')
 
@@ -45,5 +46,5 @@ class Codes(db.Model):
     __tablename__ = 'codes'
     id = db.Column('code_id', db.Integer, primary_key=True)
     user_id = db.Column('user_id', db.Integer, db.ForeignKey('users.user_id'))
-    sent_on = db.Column('sent_on', db.DateTime, default=db.func.current_timestamp())
+    sent_on = db.Column('sent_on', db.DateTime, default=datetime.datetime.now)
     code = db.Column('solution', db.Text)
