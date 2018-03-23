@@ -44,7 +44,6 @@ class User(db.Model):
                 cnt += 1
             if u.level == self.level and len(u.codes) > 0:
                 if self.codes[len(self.codes) - 1].sent_on > u.codes[len(u.codes) - 1].sent_on:
-                    print(self.username, len(self.codes), u.username, len(u.codes))
                     cnt += 1
         return cnt
 

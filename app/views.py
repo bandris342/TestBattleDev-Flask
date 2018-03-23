@@ -83,3 +83,12 @@ def start():
     flash('Bad solution, try again!')
     return redirect(url_for('start'))
 
+@app.route('/results', methods=['GET'])
+def results():
+    rank={}
+    for u in User.query.all():
+        r = u.get_rank()
+        if r > 0:
+            rank[r]=u
+
+    return render_template('results.html', rank=rank, len=len(rank))

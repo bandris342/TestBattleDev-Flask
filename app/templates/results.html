@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+ <h3>Voici le classement</h3>
+  <div class="span8 offset2 text-left">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">User</th>
+          <th scope="col">Last solved execise</th>
+          <th scope="col">Sent at</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for i in range(1, len+1) %}
+        <tr>
+          <th scope="row">{{ i }}.</th>
+          <td>{{ rank[i].username }}</td>
+          <td>{{ rank[i].level-1  }}</td>
+          <td>{{ rank[i].codes[-1].sent_on }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
